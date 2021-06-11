@@ -2,6 +2,7 @@
 
 DEFAULT_REGION=europe-west1-b
 GCLOUD_CFG_REGION=$(gcloud config get-value compute/region)
+MACHINE_TYPE=n1-standard-8
 
 if [[ $LAB_REGION ]]
 then
@@ -25,7 +26,7 @@ fi
 
 echo "Starting the EVE NG instance"
 gcloud beta compute instances create eve-ng \
-    --machine-type=n1-standard-2 \
+    --machine-type=${MACHINE_TYPE} \
     --subnet=default \
     --network-tier=PREMIUM \
     --maintenance-policy=MIGRATE \
@@ -40,7 +41,7 @@ gcloud beta compute instances create eve-ng \
     --shielded-integrity-monitoring \
     --reservation-affinity=any \
     --min-cpu-platform="Intel Haswell" \
-    --enable-nested-virtualization
+    --enable-nested-virtualization \
     --tags=eve-ng
 
 if [[ $MY_IP_SUBNET ]]
@@ -51,7 +52,7 @@ else
     echo "WARNING: Any IP address / subnet can access the labs exposed port!!!!"
 fi
 
-gcloud compute --project=aristalab firewall-rules create default-allow-http \
+gcloud compute --project=${GOOGLE_CLOUD_PROJECT} firewall-rules create default-allow-http \
     --direction=INGRESS \
     --priority=1000 \
     --network=default \
@@ -60,7 +61,7 @@ gcloud compute --project=aristalab firewall-rules create default-allow-http \
     --source-ranges=$MY_IP_SUBNET \
     --target-tags=eve-ng
 
-gcloud compute --project=aristalab firewall-rules create eve-ng-telnet \
+gcloud compute --project=${GOOGLE_CLOUD_PROJECT} firewall-rules create eve-ng-telnet \
     --direction=INGRESS \
     --priority=1000 \
     --network=default \
