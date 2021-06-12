@@ -42,7 +42,8 @@ gcloud beta compute instances create eve-ng \
     --reservation-affinity=any \
     --min-cpu-platform="Intel Haswell" \
     --enable-nested-virtualization \
-    --tags=eve-ng
+    --tags=eve-ng \
+    --labels=ttl=24h
 
 if [[ $MY_IP_SUBNET ]]
 then
