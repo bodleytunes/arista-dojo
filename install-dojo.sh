@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEFAULT_REGION=europe-west1-b
+DEFAULT_REGION=europe-west1
 GCLOUD_CFG_REGION=$(gcloud config get-value compute/region)
 MACHINE_TYPE=n1-standard-8
 
