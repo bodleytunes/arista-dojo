@@ -1,8 +1,21 @@
 #!/bin/bash
 
-DEFAULT_REGION=europe-west1-b
+# Set the following env vars to override defaults
+#  LAB_REGION=europe-west1|europe-west2|us-central-2/etc
+#  MACHINE_TYPE=n1-standard-8|etc
+#  MY_IP_SUBNET=1.2.3.4/32
+
+DEFAULT_LAB_REGION=europe-west1
+DEFAULT_MACHINE_TYPE=n1-standard-8
+
+EVE_IMG=aristadojo-eveng-v1
+EVE_IMG_PRJ=aristadojo
 GCLOUD_CFG_REGION=$(gcloud config get-value compute/region)
-MACHINE_TYPE=n1-standard-8
+
+if [[ -z $DEFAULT_MACHINE_TYPE ]]
+then
+    MACHINE_TYPE=DEFAULT_MACHINE_TYPE
+fi
 
 if [[ $LAB_REGION ]]
 then
@@ -11,8 +24,8 @@ elif [[ $GCLOUD_CFG_REGION ]]
 then 
     echo "Compute Region not explicitly configured, using gcloud config: ${GCLOUD_CFG_REGION}"
 else
-    echo "No Compute Region set, using Arista Dojo default: ${DEFAULT_REGION}"
-    gcloud config set compute/region ${DEFAULT_REGION}
+    echo "No Compute Region set, using Arista Dojo default: ${DEFAULT_LAB_REGION}"
+    gcloud config set compute/region ${DEFAULT_LAB_REGION}
 fi
 
 COMP_ENG_API_STATE=$(gcloud services list --filter='NAME:compute.googleapis.com' --format=json | jq -r '.[0].state')
@@ -58,7 +71,7 @@ gcloud beta compute instances create eve-ng \
     --network-tier=PREMIUM \
     --maintenance-policy=MIGRATE \
     --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append \
-    --image=https://www.googleapis.com/compute/v1/projects/aristadojo/global/images/aristadojo-eveng-v1 \
+    --image=https://www.googleapis.com/compute/v1/projects/${EVE_IMG_PRJ}/global/images/${EVE_IMG} \
     --image-project=${GOOGLE_CLOUD_PROJECT} \
     --boot-disk-size=32GB \
     --boot-disk-type=pd-balanced \
