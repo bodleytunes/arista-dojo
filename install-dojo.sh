@@ -23,15 +23,43 @@ then
 elif [[ $GCLOUD_CFG_REGION ]]
 then 
     echo "Compute Region not explicitly configured, using gcloud config: ${GCLOUD_CFG_REGION}"
+    LAB_REGION=${GCLOUD_CFG_REGION}
 else
     echo "No Compute Region set, using Arista Dojo default: ${DEFAULT_LAB_REGION}"
     gcloud config set compute/region ${DEFAULT_LAB_REGION}
+    LAB_REGION=${DEFAULT_LAB_REGION}
 fi
 
-COMP_ENG_API_STATE=$(gcloud services list --filter='NAME:compute.googleapis.com' --format=json | jq -r '.[0].state')
-CLOUD_BUILD_API_STATE=$(gcloud services list --filter='NAME:cloudbuild.googleapis.com' --format=json | jq -r'.[0].state')
-CLOUD_FUC_API_STATE=$(gcloud services list --filter='NAME:cloudfunctions.googleapis.com' --format=json | jq -r'.[0].state')
-CLOUD_SCHED_API_STATE=$(gcloud services list --filter='NAME:cloudscheduler.googleapis.com' --format=json | jq -r'.[0].state')
+ZONE=$(
+    gcloud compute zones list \
+        --filter="region:(${LAB_REGION})" \
+        --format=json \
+        | jq -r '.[0].name'
+)
+COMP_ENG_API_STATE=$(
+    gcloud services list \
+        --filter='NAME:compute.googleapis.com' \
+        --format=json \
+        | jq -r '.[0].state'
+)
+CLOUD_BUILD_API_STATE=$(
+    gcloud services list \
+        --filter='NAME:cloudbuild.googleapis.com' \
+        --format=json \
+        | jq -r '.[0].state'
+)
+CLOUD_FUC_API_STATE=$(
+    gcloud services list \
+        --filter='NAME:cloudfunctions.googleapis.com' \
+        --format=json \
+        | jq -r '.[0].state'
+)
+CLOUD_SCHED_API_STATE=$(
+    gcloud services list \
+        --filter='NAME:cloudscheduler.googleapis.com' \
+        --format=json \
+        | jq -r '.[0].state'
+)
 
 
 if [[ $COMP_ENG_API_STATE != 'ENABLED' ]]
@@ -83,6 +111,7 @@ gcloud beta compute instances create eve-ng \
     --min-cpu-platform="Intel Haswell" \
     --enable-nested-virtualization \
     --tags=eve-ng \
+    --zone=${ZONE}
     --labels=ttl=24h
 
 if [[ $MY_IP_SUBNET ]]
