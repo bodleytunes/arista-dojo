@@ -72,7 +72,6 @@ gcloud beta compute instances create eve-ng \
     --shielded-vtpm \
     --shielded-integrity-monitoring \
     --reservation-affinity=any \
-    --min-cpu-platform="Intel Haswell" \
     --enable-nested-virtualization \
     --tags=eve-ng \
     --zone=${ZONE} \
