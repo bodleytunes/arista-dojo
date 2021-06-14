@@ -123,7 +123,7 @@ else
     echo "WARNING: Any IP address / subnet can access the labs exposed port!!!!"
 fi
 
-gcloud compute --project=${GOOGLE_CLOUD_PROJECT} firewall-rules create default-allow-http \
+gcloud compute firewall-rules create eve-ng-http \
     --direction=INGRESS \
     --priority=1000 \
     --network=default \
@@ -132,9 +132,9 @@ gcloud compute --project=${GOOGLE_CLOUD_PROJECT} firewall-rules create default-a
     --source-ranges=$MY_IP_SUBNET \
     --target-tags=eve-ng
 
-gcloud compute --project=${GOOGLE_CLOUD_PROJECT} firewall-rules create eve-ng-telnet \
+gcloud compute firewall-rules create eve-ng-telnet \
     --direction=INGRESS \
-    --priority=1000 \
+    --priority=2000 \
     --network=default \
     --action=ALLOW \
     --rules=tcp:32769-33280 \
