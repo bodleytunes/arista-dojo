@@ -11,7 +11,7 @@ CLOUD_BUILD_API_STATE=$(
         --format=json \
         | jq -r '.[0].state'
 )
-CLOUD_FUC_API_STATE=$(
+CLOUD_FUNC_API_STATE=$(
     gcloud services list \
         --filter='NAME:cloudfunctions.googleapis.com' \
         --format=json \
@@ -30,7 +30,7 @@ CLOUD_APPENG_API_STATE=$(
         | jq -r '.[0].state'
 )
 
-if [[ $CLOUD_FUCN_API_STATE != 'ENABLED' ]]
+if [[ $CLOUD_FUNC_API_STATE != 'ENABLED' ]]
 then
     echo "Trying to enable cloud function api"
     gcloud services enable cloudfunctions.googleapis.com
