@@ -31,12 +31,15 @@ else
     LAB_REGION=${DEFAULT_LAB_REGION}
 fi
 
+
 ZONE=$(
     gcloud compute zones list \
-        --filter="region:(${LAB_REGION})" \
+        --filter="region:(${LAB_REGION}) AND status:(UP)" \
         --format=json \
         | jq -r '.[0].name'
 )
+gcloud config set compute/zone $ZONE
+
 COMP_ENG_API_STATE=$(
     gcloud services list \
         --filter='NAME:compute.googleapis.com' \
