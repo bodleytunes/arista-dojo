@@ -131,7 +131,7 @@ gcloud compute firewall-rules create eve-ng-http \
     --source-ranges=$MY_IP_SUBNET \
     --target-tags=eve-ng
 
-gcloud compute firewall-rules update eve-ng-telnet \
+gcloud compute firewall-rules create eve-ng-telnet \
     --direction=INGRESS \
     --priority=2000 \
     --network=default \
