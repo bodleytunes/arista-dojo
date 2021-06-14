@@ -42,7 +42,7 @@ def ttl_label_cleanup(event, context):
             response = request.execute()
             try:
                 for instance in response['items']:
-                    instances_selflinks.append(instance['name'])
+                    instances.append(instance['name'])
             except KeyError:
                 pass
             request = service.instances().list_next(previous_request=request, previous_response=response)
