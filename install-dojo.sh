@@ -43,48 +43,11 @@ COMP_ENG_API_STATE=$(
         --format=json \
         | jq -r '.[0].state'
 )
-CLOUD_BUILD_API_STATE=$(
-    gcloud services list \
-        --filter='NAME:cloudbuild.googleapis.com' \
-        --format=json \
-        | jq -r '.[0].state'
-)
-CLOUD_FUC_API_STATE=$(
-    gcloud services list \
-        --filter='NAME:cloudfunctions.googleapis.com' \
-        --format=json \
-        | jq -r '.[0].state'
-)
-CLOUD_SCHED_API_STATE=$(
-    gcloud services list \
-        --filter='NAME:cloudscheduler.googleapis.com' \
-        --format=json \
-        | jq -r '.[0].state'
-)
-
 
 if [[ $COMP_ENG_API_STATE != 'ENABLED' ]]
 then
     echo "Trying to enable compute engine api"
     gcloud services enable compute.googleapis.com
-    WAIT_FOR_API=true
-fi
-if [[ $CLOUD_FUCN_API_STATE != 'ENABLED' ]]
-then
-    echo "Trying to enable cloud function api"
-    gcloud services enable cloudfunctions.googleapis.com
-    WAIT_FOR_API=true
-fi
-if [[ $CLOUD_BUILD_API_STATE != 'ENABLED' ]]
-then
-    echo "Trying to enable cloud build api"
-    gcloud services enable cloudbuild.googleapis.com
-    WAIT_FOR_API=true
-fi
-if [[ $CLOUD_SCHED_API_STATE != 'ENABLED' ]]
-then
-    echo "Trying to enable cloud schedule api"
-    gcloud services enable cloudscheduler.googleapis.com
     WAIT_FOR_API=true
 fi
 if [[ $WAIT_FOR_API ]]
