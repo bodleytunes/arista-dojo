@@ -7,3 +7,4 @@ includedPermissions:
   - compute.instances.list
   - compute.instances.stop
   - compute.zones.list
+
