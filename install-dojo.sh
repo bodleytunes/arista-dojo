@@ -31,60 +31,26 @@ else
     LAB_REGION=${DEFAULT_LAB_REGION}
 fi
 
+
 ZONE=$(
     gcloud compute zones list \
-        --filter="region:(${LAB_REGION})" \
+        --filter="region:(${LAB_REGION}) AND status:(UP)" \
         --format=json \
         | jq -r '.[0].name'
 )
+gcloud config set compute/zone $ZONE
+
 COMP_ENG_API_STATE=$(
     gcloud services list \
         --filter='NAME:compute.googleapis.com' \
         --format=json \
         | jq -r '.[0].state'
 )
-CLOUD_BUILD_API_STATE=$(
-    gcloud services list \
-        --filter='NAME:cloudbuild.googleapis.com' \
-        --format=json \
-        | jq -r '.[0].state'
-)
-CLOUD_FUC_API_STATE=$(
-    gcloud services list \
-        --filter='NAME:cloudfunctions.googleapis.com' \
-        --format=json \
-        | jq -r '.[0].state'
-)
-CLOUD_SCHED_API_STATE=$(
-    gcloud services list \
-        --filter='NAME:cloudscheduler.googleapis.com' \
-        --format=json \
-        | jq -r '.[0].state'
-)
-
 
 if [[ $COMP_ENG_API_STATE != 'ENABLED' ]]
 then
     echo "Trying to enable compute engine api"
     gcloud services enable compute.googleapis.com
-    WAIT_FOR_API=true
-fi
-if [[ $CLOUD_FUCN_API_STATE != 'ENABLED' ]]
-then
-    echo "Trying to enable cloud function api"
-    gcloud services enable cloudfunctions.googleapis.com
-    WAIT_FOR_API=true
-fi
-if [[ $CLOUD_BUILD_API_STATE != 'ENABLED' ]]
-then
-    echo "Trying to enable cloud build api"
-    gcloud services enable cloudbuild.googleapis.com
-    WAIT_FOR_API=true
-fi
-if [[ $CLOUD_SCHED_API_STATE != 'ENABLED' ]]
-then
-    echo "Trying to enable cloud schedule api"
-    gcloud services enable cloudscheduler.googleapis.com
     WAIT_FOR_API=true
 fi
 if [[ $WAIT_FOR_API ]]
@@ -109,7 +75,6 @@ gcloud beta compute instances create eve-ng \
     --shielded-vtpm \
     --shielded-integrity-monitoring \
     --reservation-affinity=any \
-    --min-cpu-platform="Intel Haswell" \
     --enable-nested-virtualization \
     --tags=eve-ng \
     --zone=${ZONE} \
