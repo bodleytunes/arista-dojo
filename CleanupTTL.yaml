@@ -1,0 +1,8 @@
+title: CleanupTTL
+description: find and kill instances with ttl labels
+stage: GA
+includedPermissions:
+  - compute.instances.delete
+  - compute.instances.get
+  - compute.instances.list
+  - compute.instances.stop
