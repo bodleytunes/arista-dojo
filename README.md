@@ -49,6 +49,7 @@ Before running the Arista Dojo setup script you can optionally change some of th
 - Region == europe-west2 (aka London)
 - Firewall allowed src subnets == 0.0.0.0/0 (anyone can connect)
 
+
 You might prefer to change some of these values. If so pick new values and copy and paste the "export" examples into your already open cloud shell.
 
 #### Regions
@@ -111,4 +112,5 @@ gcloud compute images add-iam-policy-binding aristadojo-eveng-v2 \
    --member='allAuthenticatedUsers' \
    --role='roles/compute.imageUser'
 ```
+
 
