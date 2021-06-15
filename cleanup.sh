@@ -29,6 +29,15 @@ CLOUD_APPENG_API_STATE=$(
         --format=json \
         | jq -r '.[0].state'
 )
+CLOUD_PUBSUB_API_STATE=$(
+    gcloud services list \
+        --filter='NAME:pubsub.googleapis.com ' \
+        --format=json \
+        | jq -r '.[0].state'
+)
+
+
+
 
 if [[ $CLOUD_FUNC_API_STATE != 'ENABLED' ]]
 then
@@ -54,6 +63,14 @@ then
     gcloud services enable appengine.googleapis.com
     WAIT_FOR_API=true
 fi
+if [[ $CLOUD_PUBSUB_API_STATE != 'ENABLED' ]]
+then
+    echo "Trying to enable pubsub api"
+    gcloud services enable pubsub.googleapis.com
+    WAIT_FOR_API=true
+fi
+
+
 if [[ $WAIT_FOR_API ]]
 then
     echo "Waiting 1 min for API to enable"
@@ -77,9 +94,10 @@ gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} \
     --role=projects/${GOOGLE_CLOUD_PROJECT}/roles/$CLEANUP_ROLE
 
 # Create the pub/sub topic to trigger the cloud function from
-gcloud pubsub topics create CleanupTTL
+gcloud pubsub topics create $TOPIC_NAME
 
 gcloud functions deploy CleanupTTL \
+    --region $LAB_REGION \
     --trigger-topic $TOPIC_NAME \
     --runtime python37 \
     --entry-point=ttl_label_cleanup \
