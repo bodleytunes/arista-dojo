@@ -4,6 +4,12 @@ SERVICE_ACCOUNT_ID=cf-cleanup-ttl
 CLEANUP_ROLE=cleanupttl
 TOPIC_NAME=CleanupTTL
 SA_EMAIL=${SERVICE_ACCOUNT_ID}@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com
+DEFAULT_LAB_REGION=europe-west1
+
+if [[ -z $LAB_REGION ]]
+then
+    export LAB_REGION=$DEFAULT_LAB_REGION
+fi
 
 CLOUD_BUILD_API_STATE=$(
     gcloud services list \
