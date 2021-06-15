@@ -113,4 +113,6 @@ gcloud compute images add-iam-policy-binding aristadojo-eveng-v2 \
    --role='roles/compute.imageUser'
 ```
 
+## OSX / MAC EVE-NG Client
 
+https://www.eve-ng.net/index.php/download/

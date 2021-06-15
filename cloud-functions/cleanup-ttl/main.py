@@ -17,14 +17,20 @@ def ttl_label_cleanup(event, context):
 
     The pub/sub message is triggered by a gcloud scheduler job
     """
-
+    print(
+        "Func was triggered by messageId {} published at {}".format(
+            context.event_id, context.timestamp
+        )
+    )
     pubsub_message = base64.b64decode(event['data']).decode('utf-8')
     print('pubsub_message: {}'.format(pubsub_message))
     message = loads(pubsub_message)
     label_filter = 'labels.ttl:{}'.format(message['ttl'])
 
     credentials = GoogleCredentials.get_application_default()
-    service = discovery.build('compute', 'v1', credentials=credentials)
+    service = discovery.build(
+        'compute', 'v1', credentials=credentials
+    )
     project = os.environ.get('GCP_PROJECT', None)
 
     request = service.zones().list(project=project)

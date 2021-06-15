@@ -24,15 +24,15 @@ then
 elif [[ $GCLOUD_CFG_REGION ]]
 then 
     echo "Compute Region not explicitly configured, using gcloud config: ${GCLOUD_CFG_REGION}"
-    LAB_REGION=${GCLOUD_CFG_REGION}
+    export LAB_REGION=${GCLOUD_CFG_REGION}
 else
     echo "No Compute Region set, using Arista Dojo default: ${DEFAULT_LAB_REGION}"
     gcloud config set compute/region ${DEFAULT_LAB_REGION}
-    LAB_REGION=${DEFAULT_LAB_REGION}
+    export LAB_REGION=${DEFAULT_LAB_REGION}
 fi
 
 
-ZONE=$(
+export ZONE=$(
     gcloud compute zones list \
         --filter="region:(${LAB_REGION}) AND status:(UP)" \
         --format=json \
