@@ -44,6 +44,7 @@ CLOUD_PUBSUB_API_STATE=$(
 
 
 
+
 if [[ $CLOUD_FUNC_API_STATE != 'ENABLED' ]]
 then
     echo "Trying to enable cloud function api"
@@ -74,6 +75,7 @@ then
     gcloud services enable pubsub.googleapis.com
     WAIT_FOR_API=true
 fi
+
 
 if [[ $WAIT_FOR_API ]]
 then
