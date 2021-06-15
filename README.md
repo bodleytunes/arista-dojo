@@ -181,7 +181,14 @@ The install will continue, start a VM instance and set up firewalls to the EVE-N
 
 ## Setup Auto Cleaup of Instance
 
-The 
+Run the "cleanup.sh" script to setup a automated process to kill the eve-ng VM every day at 23:00 UTC. If you remove the label "ttl:24h" the VM will not be cleaned up.
+
+```bash
+cd ~/arista-dojo
+./cleanup.sh
+```
+
+## Connect to EVE-NG WEB GUI
 
 The below command shows you the public IP that the EVE-NG GUI is hosted on (http://34.76.90.27 , per the example output below). 
 
