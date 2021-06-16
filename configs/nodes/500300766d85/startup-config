@@ -9,6 +9,12 @@ hostname leaf3
 interface Management1
  ip address 10.10.0.14/24
 !
+interface Ethernet1
+ ip address 192.168.40.5/31
+!
+interface Ethernet2
+ ip address 192.168.40.11/31
+!
 ip route 0.0.0.0/0 10.10.0.1 
 management api http-commands
  no shutdown

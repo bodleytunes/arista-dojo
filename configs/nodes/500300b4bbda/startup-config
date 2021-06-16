@@ -13,6 +13,15 @@ ip route 0.0.0.0/0 10.10.0.1
 management api http-commands
  no shutdown
 !
+interface Ethernet1
+ ip address 192.168.40.6/31
+!
+interface Ethernet2
+ ip address 192.168.40.8/31
+!
+interface Ethernet3
+ ip address 192.168.40.10/31
+!
 banner login
 Welcome to $(hostname)!
 This switch has been provisioned using the ZTPServer from Arista Networks
