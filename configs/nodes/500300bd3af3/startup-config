@@ -11,9 +11,11 @@ interface Management1
 !
 interface Ethernet1
  ip address 192.168.40.0/31
+ no switchport
 !
 interface Ethernet2
  ip address 192.168.40.2/31
+ no switchport
 !
 interface Ethernet3
  ip address 192.168.40.4/31

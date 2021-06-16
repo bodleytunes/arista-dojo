@@ -11,9 +11,11 @@ interface Management1
 !
 interface Ethernet1
  ip address 192.168.40.1/31
+ no switchport
 !
 interface Ethernet2
  ip address 192.168.40.7/31
+ no switchport
 !
 ip route 0.0.0.0/0 10.10.0.1 
 management api http-commands
