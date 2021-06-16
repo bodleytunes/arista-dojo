@@ -13,6 +13,7 @@
    <br/>
    <br/>
    ![activate button](images/activate.png)
+
    <br/>
    <br/>
 
@@ -64,6 +65,7 @@
    <br/>
    <br/>
    ![cloudshell button](images/cloud-shell-button.png)
+
    <br/>
    <br/>
 10. Click "Continue" to start cloudshell for the first time
@@ -116,6 +118,7 @@ Alternative values are export as shell enviroment varibles, see below.
 - MY_IP_SUBNET == 0.0.0.0/0 (anyone can connect)
 - MACHINE_TYPE == n2-standard-4 (4vcpu, 16GB)
 
+
 You might prefer to change some of these values. If so pick new values and copy and paste the "export" examples into your already open cloud shell.
 
 ### Region Examples
@@ -131,6 +134,7 @@ You might prefer to change some of these values. If so pick new values and copy 
 
 - n2-standard-2 == 2 vcpu and 8GB RAM
 - n2-standard-8 == 8 vcpu and 32GB RAM
+
 
 **NOTE:** The MY_IP_SUBNET value MUST end with a slash mask suffix.
 
@@ -170,6 +174,7 @@ If prompted, answer "y" to enable the GCP compute engine API, to allow the creat
 
 <br/>
 
+
 The install will continue, start a VM instance and set up firewalls to the EVE-NG lab instance. If you didn't set a MY_IP_SUBNET env var then anyone on the internet will be able to access the instance.
 
 ![cloud shell auth](images/install-finish.png)
@@ -193,11 +198,15 @@ The below command shows you the public IP that the EVE-NG GUI is hosted on (http
 gcloud compute instances describe eve-ng | grep natIP
 ```
 
+
 <br/>
 
 ![cloud shell auth](images/natIP.png)
 
 <br/>
+
+
+
 
 **NOTE:** Select all devices in Eve-ng and choose start from the menu. It will take 5-10 mins for all devices to get to a ready state.
 
