@@ -8,7 +8,7 @@
 DEFAULT_LAB_REGION=europe-west1
 DEFAULT_MACHINE_TYPE=n2-standard-4
 
-EVE_IMG=aristadojo-eveng-v2
+EVE_IMG=aristadojo-eveng-v3
 EVE_IMG_PRJ=aristadojo
 GCLOUD_CFG_REGION=$(gcloud config get-value compute/region)
 
