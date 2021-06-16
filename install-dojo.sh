@@ -6,14 +6,13 @@
 #  MY_IP_SUBNET=1.2.3.4/32
 
 DEFAULT_LAB_REGION=europe-west1
-DEFAULT_MACHINE_TYPE=n1-standard-8
+DEFAULT_MACHINE_TYPE=n2-standard-4
 
 EVE_IMG=aristadojo-eveng-v2
 EVE_IMG_PRJ=aristadojo
 GCLOUD_CFG_REGION=$(gcloud config get-value compute/region)
-MACHINE_TYPE=n1-standard-8
 
-if [[ -z $DEFAULT_MACHINE_TYPE ]]
+if [[ -z $MACHINE_TYPE ]]
 then
     MACHINE_TYPE=DEFAULT_MACHINE_TYPE
 fi

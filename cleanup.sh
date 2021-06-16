@@ -4,6 +4,12 @@ SERVICE_ACCOUNT_ID=cf-cleanup-ttl
 CLEANUP_ROLE=cleanupttl
 TOPIC_NAME=CleanupTTL
 SA_EMAIL=${SERVICE_ACCOUNT_ID}@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com
+DEFAULT_LAB_CF_REGION=europe-west1
+
+if [[ -z $LAB_CF_REGION ]]
+then
+    export LAB_CF_REGION=$DEFAULT_LAB_CF_REGION
+fi
 
 CLOUD_BUILD_API_STATE=$(
     gcloud services list \
@@ -97,7 +103,8 @@ gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} \
 gcloud pubsub topics create $TOPIC_NAME
 
 gcloud functions deploy CleanupTTL \
-    --region $LAB_REGION \
+    --region $LAB_CF_REGION \
+
     --trigger-topic $TOPIC_NAME \
     --runtime python37 \
     --entry-point=ttl_label_cleanup \
@@ -112,5 +119,3 @@ gcloud scheduler jobs create pubsub ttl_cleanup_24h \
     --schedule "* 23 * * *" \
     --topic $TOPIC_NAME \
     --message-body-from-file=ttl-24h-message.json
-
-
