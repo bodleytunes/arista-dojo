@@ -5,15 +5,15 @@
 <br/>
 
 1. Create a GCP account and attach payment method to get 300 USD free credit.
-   
+
    https://console.cloud.google.com
    <br/>
-
 
 2. Click on activate (top right), agree to terms of service and set country, contact info, add credit card info etc. Short survey on why you are creating account. $300 USD credit is good for 90 days.
    <br/>
    <br/>
-![activate button](images/activate.png)
+   ![activate button](images/activate.png)
+
    <br/>
    <br/>
 
@@ -58,31 +58,32 @@
    <br/>
    <br/>
 
-9.  Verify that project (top left) is now shown as the new project. Then open GCP cloud shell (clickl top right ">\_" button)
+9. Verify that project (top left) is now shown as the new project. Then open GCP cloud shell (clickl top right ">\_" button)
    <br/>
    <br/>
    ![cloudshell button](images/set-to-new-proj.png)
    <br/>
    <br/>
    ![cloudshell button](images/cloud-shell-button.png)
+
    <br/>
    <br/>
 10. Click "Continue" to start cloudshell for the first time
-   <br/>
-   <br/>
-   ![Project drop down menu](images/first-cloudshell.png)
-   <br/>
-   <br/>
+    <br/>
+    <br/>
+    ![Project drop down menu](images/first-cloudshell.png)
+    <br/>
+    <br/>
 11. You show now have a cloud shell open in the browser!
-   <br/>
-   <br/>
-   ![Project drop down menu](images/cloud-shell.png)
-   <br/>
-   <br/>
+    <br/>
+    <br/>
+    ![Project drop down menu](images/cloud-shell.png)
+    <br/>
+    <br/>
 
 <br/>
 
-__You can now enter directly the following bash command into the cloud shell to setup your lab enviroment__
+**You can now enter directly the following bash command into the cloud shell to setup your lab enviroment**
 
 <br/>
 <br/>
@@ -100,6 +101,7 @@ Paste the follow bash commands into the cloudshell, see example out.
 git clone https://github.com/bodleytunes/arista-dojo.git
 cd arista-dojo
 ```
+
 <br/>
 
 ![git clone](images/git-clone.png)
@@ -114,7 +116,8 @@ Alternative values are export as shell enviroment varibles, see below.
 
 - LAB_REGION == europe-west2 (aka London)
 - MY_IP_SUBNET == 0.0.0.0/0 (anyone can connect)
-- MACHINE_TYPE ==  n2-standard-4 (4vcpu, 16GB)
+- MACHINE_TYPE == n2-standard-4 (4vcpu, 16GB)
+
 
 You might prefer to change some of these values. If so pick new values and copy and paste the "export" examples into your already open cloud shell.
 
@@ -140,7 +143,7 @@ Example env vars to change lab to run in Netherlands region and allow access to 
 ```bash
 export LAB_REGION=europe-west4
 export MY_IP_SUBNET=1.2.3.4/32
-export MACHINE_TYPE=n2-standard-8 
+export MACHINE_TYPE=n2-standard-8
 ```
 
 <br/>
@@ -160,7 +163,6 @@ ls -l
 <br/>
 
 You may see a pop up asking for authorization to allow the cloud shell to make GCP API called. Please click the 'Authorize' button. You
-
 
 ![cloud shell auth](images/auth-shell.png)
 
@@ -190,11 +192,12 @@ cd ~/arista-dojo
 
 ## Connect to EVE-NG WEB GUI
 
-The below command shows you the public IP that the EVE-NG GUI is hosted on (http://34.76.90.27 , per the example output below). 
+The below command shows you the public IP that the EVE-NG GUI is hosted on (http://34.76.90.27 , per the example output below).
 
 ```bash
 gcloud compute instances describe eve-ng | grep natIP
 ```
+
 
 <br/>
 
@@ -204,14 +207,15 @@ gcloud compute instances describe eve-ng | grep natIP
 
 
 
+
 **NOTE:** Select all devices in Eve-ng and choose start from the menu. It will take 5-10 mins for all devices to get to a ready state.
 
 # Notes Public Image
 
-The "aristadojo-eveng-v*" image that is used to build the eve-ng lab enviroment is maintained in a seperate GCP account and the follwing IAM policy binding are made to make the image available to other GCP accounts:
+The "aristadojo-eveng-v\*" image that is used to build the eve-ng lab enviroment is maintained in a seperate GCP account and the follwing IAM policy binding are made to make the image available to other GCP accounts:
 
 ```bash
-gcloud compute images add-iam-policy-binding aristadojo-eveng-v2 \
+gcloud compute images add-iam-policy-binding aristadojo-eveng-v3 \
    --member='allAuthenticatedUsers' \
    --role='roles/compute.imageUser'
 ```
