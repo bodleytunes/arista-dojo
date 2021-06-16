@@ -1,0 +1,30 @@
+username admin privilege 15 role network-admin secret admin
+!
+aaa authorization exec default local
+!
+ip routing
+!
+hostname leaf1
+!
+interface Management1
+ ip address 10.10.0.12/24
+!
+interface Ethernet1
+ ip address 192.168.40.1/31
+ no switchport
+!
+interface Ethernet2
+ ip address 192.168.40.7/31
+ no switchport
+!
+ip route 0.0.0.0/0 10.10.0.1 
+management api http-commands
+ no shutdown
+!
+banner login
+Welcome to $(hostname)!
+This switch has been provisioned using the ZTPServer from Arista Networks
+Docs: http://ztpserver.readthedocs.org/
+Source Code: https://github.com/arista-eosplus/ztpserver
+EOF
+!
