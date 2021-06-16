@@ -104,6 +104,7 @@ gcloud pubsub topics create $TOPIC_NAME
 
 gcloud functions deploy CleanupTTL \
     --region $LAB_CF_REGION \
+
     --trigger-topic $TOPIC_NAME \
     --runtime python37 \
     --entry-point=ttl_label_cleanup \
